@@ -59,53 +59,43 @@ The application follows a frontend-backend architecture connected to a RAG pipel
 
 ### 🧠 Architecture
 
-```mermaid
-flowchart TB
-    UI["React Frontend<br/>(PDF Upload · Chat · Citations)"]
-    API["FastAPI Backend<br/>(Port 8000)"]
-
-    UI -->|"HTTP: POST /upload, POST /query"| API
-
-    subgraph RAG["rag_engine.py"]
-        direction TB
-
-        subgraph INGEST["PDF Processing"]
-            direction TB
-            PDF["PDF Bytes"]
-            EXTRACT["pypdf<br/>(Extract Text)"]
-            CHUNK["LangChain<br/>(Text Chunking)"]
-            EMB["Gemini Embedding API"]
-            STORE[("Pinecone<br/>(Vectors + Metadata)")]
-
-            PDF --> EXTRACT --> CHUNK --> EMB --> STORE
-        end
-
-        subgraph QUERY["Question Answering"]
-            direction TB
-            Q["User Question"]
-            QEMB["Gemini Embedding API<br/>(Query Vector)"]
-            SEARCH["Pinecone Similarity Search"]
-            CONTEXT["Retrieved Context"]
-            LLM["Gemini 2.5 Flash<br/>(Answer Generation)"]
-
-            Q --> QEMB --> SEARCH --> CONTEXT --> LLM
-        end
-
-        STORE --> SEARCH
-    end
-
-    API --> PDF
-    API --> Q
-    LLM --> API
-    API --> UI
+```text
+┌─────────────────────────────────────────────┐
+│              React Frontend                 │
+│       (PDF Upload · Chat UI · Answers)      │
+└─────────────────────┬───────────────────────┘
+                      │ HTTP (POST /upload, /query)
+                      ▼
+┌─────────────────────────────────────────────┐
+│               FastAPI Backend                │
+│                                             │
+│  ┌───────────────────────────────────────┐  │
+│  │             rag_engine.py              │  │
+│  │                                       │  │
+│  │  PDF Processing                       │  │
+│  │   • pypdf (extract text)               │  │
+│  │   • LangChain (text chunking)          │  │
+│  │   • Gemini Embedding API               │  │
+│  │   • Pinecone (vectors + metadata)      │  │
+│  │                                       │  │
+│  │  User Question                        │  │
+│  │   • Gemini Embedding API (query)       │  │
+│  │   • Pinecone similarity search         │  │
+│  │   • Retrieved document context         │  │
+│  │   • Google Gemini (answer generation)  │  │
+│  └───────────────────────────────────────┘  │
+└─────────────────────────────────────────────┘
 ```
+
+**Workflow**
+
 1. **PDF Upload:** The user uploads a PDF through the React frontend.
-2. **Text Extraction:** The FastAPI backend extracts text from the PDF using `pypdf`.
-3. **Document Chunking:** LangChain splits the extracted text into smaller chunks.
-4. **Embedding and Storage:** Gemini generates embeddings, which are stored in Pinecone.
-5. **Question Processing:** The backend converts the user's question into an embedding and searches Pinecone for relevant document chunks.
-6. **Answer Generation:** Google Gemini uses the retrieved context to generate an answer.
-7. **Response Display:** The answer is returned to the frontend and displayed to the user.
+2. **Text Extraction:** The backend extracts text using `pypdf`.
+3. **Chunking and Embedding:** LangChain splits the text into chunks, and Gemini generates embeddings.
+4. **Vector Storage:** Pinecone stores the document vectors and associated metadata.
+5. **Retrieval:** The user's question is embedded and used to retrieve relevant document chunks from Pinecone.
+6. **Answer Generation:** Google Gemini generates an answer using the retrieved context.
+7. **Response:** The answer is returned to the frontend.
 
 ```
 
@@ -336,7 +326,6 @@ Start the backend and open:
 
 `http://localhost:8000/docs`
 
-The Swagger UI lets you inspect available endpoints, request parameters, schemas, and response formats.
 ---
 
 ## Configuration
@@ -348,8 +337,8 @@ The application uses environment variables to configure the backend and frontend
 Create a local `.env` file inside the `backend/` directory using `.env.example` as a template.
 
 ```env
-GEMINI_API_KEY=[your_gemini_api_key](https://aistudio.google.com/app/apikey)
-PINECONE_API_KEY=[your_pinecone_api_key](https://app.pinecone.io)
+GEMINI_API_KEY=https://aistudio.google.com/app/api-keys
+PINECONE_API_KEY=https://app.pinecone.io/
 PINECONE_INDEX_NAME=doc-chatbot
 ```
 
