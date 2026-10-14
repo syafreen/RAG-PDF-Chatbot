@@ -1,6 +1,5 @@
 
 # RAG-PDF-Chatbot
-### Full-Stack RAG-Based PDF Question Answering System
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white" alt="Python"/>
