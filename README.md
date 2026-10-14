@@ -331,7 +331,6 @@ GEMINI_API_KEY=your_gemini_api_key_here
 PINECONE_API_KEY=your_pinecone_api_key_here
 PINECONE_INDEX_NAME=doc-chatbot
 ```
-```
 
 Replace the placeholder values with your own credentials. Ensure that the configured Pinecone index is compatible with your embedding model.
 
