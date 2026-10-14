@@ -169,12 +169,8 @@ Install the following:
 
 1. Python compatible with the backend dependencies.
 2. Node.js and npm.
-3. ### Prerequisites
-
-- Python 3.11
-- Node.js 18+ and npm
-- Free [Gemini API key](https://aistudio.google.com/app/api-keys)
-- Free [Pinecone API key](https://app.pinecone.io/) 
+3. Free [Gemini API key](https://aistudio.google.com/app/api-keys)
+4. Free [Pinecone API key](https://app.pinecone.io/) 
 
 ---
 
@@ -331,9 +327,10 @@ The application uses environment variables to configure the backend and frontend
 Create a local `.env` file inside the `backend/` directory using `.env.example` as a template.
 
 ```env
-GEMINI_API_KEY=https://aistudio.google.com/app/api-keys
-PINECONE_API_KEY=https://app.pinecone.io/
+GEMINI_API_KEY=your_gemini_api_key_here
+PINECONE_API_KEY=your_pinecone_api_key_here
 PINECONE_INDEX_NAME=doc-chatbot
+```
 ```
 
 Replace the placeholder values with your own credentials. Ensure that the configured Pinecone index is compatible with your embedding model.
