@@ -53,46 +53,41 @@ The frontend is built with React and Vite, while the backend uses FastAPI, LangC
 
 The application follows a frontend-backend architecture connected to a RAG pipeline.
 
-```mermaid
-
-
-### 🧠 Architecture
-
 ```text
-┌─────────────────────────────────────────────┐
-│              React Frontend                 │
-│       (PDF Upload · Chat UI · Answers)      │
-└─────────────────────┬───────────────────────┘
-                      │ HTTP (POST /upload, /query)
-                      ▼
-┌─────────────────────────────────────────────┐
-│               FastAPI Backend                │
-│                                             │
-│  ┌───────────────────────────────────────┐  │
-│  │             rag_engine.py              │  │
-│  │                                       │  │
-│  │  PDF Processing                       │  │
-│  │   • pypdf (extract text)               │  │
-│  │   • LangChain (text chunking)          │  │
-│  │   • Gemini Embedding API               │  │
-│  │   • Pinecone (vectors + metadata)      │  │
-│  │                                       │  │
-│  │  User Question                        │  │
-│  │   • Gemini Embedding API (query)       │  │
-│  │   • Pinecone similarity search         │  │
-│  │   • Retrieved document context         │  │
-│  │   • Google Gemini (answer generation)  │  │
-│  └───────────────────────────────────────┘  │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────┐
+│               React Frontend                 │
+│       (PDF Upload · Chat UI · Answers)        │
+└──────────────────────┬───────────────────────┘
+                       │ HTTP (POST /upload, /query)
+                       ▼
+┌──────────────────────────────────────────────┐
+│                FastAPI Backend                │
+│                                              │
+│  ┌────────────────────────────────────────┐  │
+│  │              rag_engine.py              │  │
+│  │                                        │  │
+│  │  PDF Processing                        │  │
+│  │   • pypdf (extract text)                │  │
+│  │   • LangChain (text chunking)           │  │
+│  │   • Gemini Embedding API                │  │
+│  │   • Pinecone (vectors + metadata)       │  │
+│  │                                        │  │
+│  │  User Question                         │  │
+│  │   • Gemini Embedding API (query)        │  │
+│  │   • Pinecone similarity search          │  │
+│  │   • Retrieved document context          │  │
+│  │   • Google Gemini (answer generation)   │  │
+│  └────────────────────────────────────────┘  │
+└──────────────────────────────────────────────┘
 ```
 
-**Workflow**
+### How It Works
 
 1. **PDF Upload:** The user uploads a PDF through the React frontend.
-2. **Text Extraction:** The backend extracts text using `pypdf`.
+2. **Text Extraction:** The backend extracts PDF text using `pypdf`.
 3. **Chunking and Embedding:** LangChain splits the text into chunks, and Gemini generates embeddings.
-4. **Vector Storage:** Pinecone stores the document vectors and associated metadata.
-5. **Retrieval:** The user's question is embedded and used to retrieve relevant document chunks from Pinecone.
+4. **Vector Storage:** Pinecone stores the document vectors and metadata.
+5. **Retrieval:** The user's question is embedded and used to find relevant document chunks.
 6. **Answer Generation:** Google Gemini generates an answer using the retrieved context.
 7. **Response:** The answer is returned to the frontend.
 
@@ -133,38 +128,38 @@ The application follows a frontend-backend architecture connected to a RAG pipel
 RAG-PDF-Chatbot/
 │
 ├── assets/
-│   ├── Homepage.png              # Application homepage screenshot
-│   └── chat_response.png         # Chat response screenshot
+│   ├── Homepage.png
+│   └── chat_response.png
 │
 ├── backend/
-│   ├── main.py                   # FastAPI application and endpoints
-│   ├── chat.py                   # Chat functionality
-│   ├── rag_engine.py             # RAG and retrieval logic
-│   ├── requirements.txt          # Python dependencies
-│   └── .env.example              # Backend environment template
+│   ├── main.py
+│   ├── chat.py
+│   ├── rag_engine.py
+│   ├── requirements.txt
+│   └── .env.example
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Message.jsx       # Chat message component
-│   │   │   └── Sidebar.jsx       # Sidebar and PDF upload interface
-│   │   ├── api.js                # Frontend API communication
-│   │   ├── App.jsx               # Main React application
-│   │   ├── index.css             # Application styles
-│   │   └── main.jsx              # React entry point
-│   ├── index.html                # HTML entry point
-│   ├── package.json              # Frontend dependencies and scripts
-│   ├── package-lock.json         # Locked npm dependency versions
-│   └── vite.config.js            # Vite configuration
+│   │   │   ├── Message.jsx
+│   │   │   └── Sidebar.jsx
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
 │
-├── .gitignore                    # Files excluded from Git
-├── LICENSE                       # Project license
-└── README.md                     # Project documentation
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## ## Getting Started
+## Getting Started
 
 Follow these steps to set up and run the application locally.
 
