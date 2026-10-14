@@ -81,6 +81,7 @@ The application follows a frontend-backend architecture connected to a RAG pipel
 └──────────────────────────────────────────────┘
 ```
 
+
 ### How It Works
 
 1. **PDF Upload:** The user uploads a PDF through the React frontend.
@@ -91,19 +92,19 @@ The application follows a frontend-backend architecture connected to a RAG pipel
 6. **Answer Generation:** Google Gemini generates an answer using the retrieved context.
 7. **Response:** The answer is returned to the frontend.
 
-```
+---
 
 ## Key Features
 
-- **PDF Upload:** Upload PDF documents through the web interface.
-- **Document Question Answering:** Ask natural-language questions about document content.
-- **Retrieval-Augmented Generation:** Retrieve relevant context before generating responses.
-- **Semantic Search:** Retrieve information based on query meaning.
-- **AI-Powered Responses:** Integrate Google Gemini into the question-answering workflow.
-- **Vector Database:** Use Pinecone for document vector storage and retrieval.
-- **Interactive Chat Interface:** Present questions and answers in a React-based interface.
-- **Modular Backend:** Separate API handling, chat functionality, and RAG logic.
-- **API-Based Integration:** Connect the frontend and backend using HTTP requests.
+- **PDF Document Upload:** Upload PDF files through the web interface.
+- **Document Question Answering:** Ask natural-language questions about uploaded documents.
+- **Retrieval-Augmented Generation (RAG):** Retrieve relevant document context before generating answers.
+- **Semantic Vector Search:** Find relevant document chunks based on query meaning.
+- **AI-Powered Responses:** Generate context-aware answers using Google Gemini.
+- **Vector Database Integration:** Store and retrieve document embeddings using Pinecone.
+- **Interactive Chat Interface:** Ask questions and view responses through a React-based interface.
+- **Document Processing Pipeline:** Extract PDF text and prepare it for retrieval.
+- **Modular Backend Architecture:** Separate API endpoints, chat functionality, and RAG logic.
 
 ---
 
@@ -119,7 +120,6 @@ The application follows a frontend-backend architecture connected to a RAG pipel
 | LLM & Embeddings | Google Gemini | Answer generation and text embeddings |
 | Vector Database | Pinecone | Document vector storage and retrieval |
 | PDF Processing | pypdf | PDF text extraction |
-
 ---
 
 ## Project Structure
